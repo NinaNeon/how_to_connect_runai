@@ -1,6 +1,52 @@
 # how_to_connect_runai
 
 # Run:ai UNet+VAE分割模型训练与推理指南
+```bash
+nina@nina-X550VX:~$ cd runai-isaac
+nina@nina-X550VX:~/runai-isaac$ source secrets/env.sh
+lftp -u ${FTP_USER},${FTP_PASS} ${STORAGE_NODE_IP}
+lftp elsalab@10.225.0.35:~> cd /mnt/nfs/nina
+put process.py
+cd: Fatal error: Certificate verification: Not trusted (B8:A9:2A:44:F9:60:4F:D6:D1:7F:BA:35:54:EF:F1:69:7E:6F:A6:CC)
+put: /home/nina/runai-isaac/process.py: No such file or directory
+lftp elsalab@10.225.0.35:~> cd /mnt/nfs/nina
+put process.py
+cd: Fatal error: Certificate verification: Not trusted (B8:A9:2A:44:F9:60:4F:D6:D1:7F:BA:35:54:EF:F1:69:7E:6F:A6:CC)
+put: /home/nina/runai-isaac/process.py: No such file or directory
+lftp elsalab@10.225.0.35:~> echo "set ssl:verify-certificate no" >> ~/.lftprc
+lftp elsalab@10.225.0.35:~> set ssl:verify-certificate no
+lftp elsalab@10.225.0.35:~> cd /mnt/nfs/nina
+cd: Access failed: 550 Failed to change directory. (/mnt/nfs/nina)
+lftp elsalab@10.225.0.35:/> put ~/runai-isaac/hello/process.py
+put: /home/nina/runai-isaac/hello/process.py: Access failed: 553 Could not create file. (process.py)
+lftp elsalab@10.225.0.35:/> cd /mnt/nfs
+mkdir nina
+cd nina
+cd ok, cwd=/mnt/nfs
+mkdir ok, `nina' created
+cd ok, cwd=/mnt/nfs/nina
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> put ~/runai-isaac/hello/process.py
+118 bytes transferred
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> ls
+-rw------- 1 ftp ftp 118 May 13 03:47 process.py
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> ls
+-rw------- 1 ftp ftp 118 May 13 03:47 process.py
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> ls
+-rw------- 1 ftp ftp 118 May 13 03:47 process.py
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> put process.py
+put: /home/nina/runai-isaac/process.py: No such file or directory
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> put ~/runai-isaac/hello/process.py
+88 bytes transferred
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> ls
+-rw-r--r-- 1 ftp ftp 39 May 13 04:05 output.txt
+-rw------- 1 ftp ftp 88 May 13 04:08 process.py
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> get output.txt
+39 bytes transferred
+lftp elsalab@10.225.0.35:/mnt/nfs/nina> cat output.txt
+This is a file written from process.py
+39 bytes transferred
+lftp elsalab@10.225.0.35:/mnt/nfs/nina>
+```
 
 ## 概述
 
