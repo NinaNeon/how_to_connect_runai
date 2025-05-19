@@ -48,6 +48,62 @@ This is a file written from process.py
 lftp elsalab@10.225.0.35:/mnt/nfs/nina>
 ```
 
+
+ikea_purewater — 5/17/25, 9:20 PM
+https://github.com/j3soon/runai-isaac
+GitHub
+GitHub - j3soon/runai-isaac: Tools and Scripts for running Isaac Si...
+Tools and Scripts for running Isaac Sim workloads on Run:ai - j3soon/runai-isaac
+Tools and Scripts for running Isaac Sim workloads on Run:ai - j3soon/runai-isaac
+陳政錡    alex    zqchen020719@gmail.com    楊老師    O    23810367b1Ii2!
+https://docs.google.com/spreadsheets/d/1nsghCMsiS0Gl_LCTboJ-JZn6w9Ww6nr1rNJv_cB8ANw/edit?gid=0#gid=0
+Google Docs
+OVX L40 User Data (2024-11)
+Image
+Run:ai README,
+VPN Profile is under secrets/<YOUR_USERNAME>.ovpn
+
+<RUNAI_USER_EMAIL> & <RUNAI_USER_PASSWORD> is in the "OVX L40 User Data" spreadsheet.
+
+secrets/env.sh:
+
+export RUNAI_URL="https://runai.tpe1.local"
+export STORAGE_NODE_IP="10.225.0.35"
+export FTP_USER="elsalab"
+export FTP_PASS="CaHaDdAUtifpthtoDbDy"
+
+
+Documentation at:
+
+https://github.com/j3soon/runai-isaac,
+
+Replace every lab1 to elsalab and you should be good to go.
+
+Note that <YOUR_USERNAME> and <RUNAI_USER_EMAIL> is different. For example my username is johnsons and email is johnsons@nvidia.com.
+
+If you encountered any questions, or have ideas to improve the GitHub README, please let me know. Thanks!
+GitHub
+GitHub - j3soon/runai-isaac: Tools and Scripts for running Isaac Si...
+Tools and Scripts for running Isaac Sim workloads on Run:ai - j3soon/runai-isaac
+Tools and Scripts for running Isaac Sim workloads on Run:ai - j3soon/runai-isaac
+ikea_purewater — 5/17/25, 9:28 PM
+https://drive.google.com/drive/u/0/folders/1OYtNgODgzxY_r7XiMBMtBIQXQ6uDTjth
+Google Drive: Sign-in
+Access Google Drive with a Google account (for personal use) or Google Workspace account (for business use).
+36232305
+Image
+Image
+djd4b5123N
+ikea_purewater — 5/17/25, 9:36 PM
+https://runai.tpe1.local/
+陳政錡    alex    zqchen020719@gmail.com    楊老師    O    23810367b1Ii2!
+https://docs.google.com/presentation/d/1G9SBX6WeM9oiN1si909Cy2YLJcWyw6BM/edit?slide=id.p8#slide=id.p8
+ikea_purewater — 5/17/25, 9:46 PM
+https://drive.google.com/drive/folders/1EPzkAYBd0TxuYO3lbGNlgb9_PnYznk49?usp=sharing
+Google Drive
+
+
+
 ## 概述
 
 1. 上传预训练的UNet和VAE模型
