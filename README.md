@@ -337,6 +337,118 @@ put /tmp/process.py
    - Command: /run.sh "pip install diffusers transformers pycocotools opencv-python" "jupyter lab --ip=0.0.0.0 --no-browser --allow-root --NotebookApp.base_url=/${RUNAI_PROJECT}/${RUNAI_JOB_NAME} --NotebookApp.token='' --notebook-dir=/"
 3. 点击CREATE ENVIRONMENT
 
+【重新建 Workspace：防止它自己結束】
+回到 Workloads → + NEW WORKLOAD → Workspace
+
+填這些（重點在紅字）：
+
+欄位    要填什麼
+Name    unzip-workspace-v2（可以自由命名）
+Environment    你剛剛建的那個，例如 nina-cat500-env
+Command    /bin/bash -c "sleep infinity" ← :white_check_mark: :white_check_mark: :white_check_mark:
+Compute    選 gpu1
+Data Source    :white_check_mark: 勾選 elsalab-nfs
+
+按 CREATE
+
+這樣 container 會一直「睡著」，你就有時間按：
+
+sql
+複製
+編輯
+CONNECT → Terminal :white_check_mark:
+:white_check_mark: 建好後該怎麼做？
+在 Terminal 裡輸入這三行：
+
+bash
+複製
+編輯
+apt update && apt install -y unzip
+cd /mnt/nfs/nina
+unzip -o cat500_classifier.zip -d cat500_classifier
+解壓成功後，再跑：
+
+bash
+複製
+編輯
+cd cat500_classifier
+pip install -r requirements.txt
+python train_cat500_fixed6.py
+:white_check_mark: 總結：你要做的事只剩一件
+刪掉那個 Completed 的 Workspace，重建一個加 sleep infinity 的。
+
+你只要這一步，就能成功進 terminal 開始跑。
+完成後你整個流程就打通了，要不要我幫你寫一鍵 workspace 建立指令 + unzip 指令包 也可以。你只要說一聲！
+
+
+
+
+
+
+
+
+
+你說：
+
+then????? still cant find terminal
+
+ChatGPT 說：
+你做得完美！現在 unzip-workspace-v2 正在 Running 狀態，代表 container 正常啟動了。
+
+:white_check_mark: 但你還看不到 Terminal，這是 Run:ai 預設 UI 設定的關係：
+:point_right: 只有你建立的 Environment 有選「Jupyter Tool」 的時候，才會出現：
+sql
+複製
+編輯
+CONNECT → Jupyter → Terminal
+你剛剛的 Environment 沒勾 Tool，所以只看到 CONNECT 但沒彈選單。
+
+:white_check_mark: 解法有兩種，我給你快速選：
+:white_check_mark: 【方法 1】直接改這個 Environment，加上 Jupyter 工具（推薦）
+你可以照以下步驟補一下：
+
+到 Run:ai 左邊欄位「Assets → Environments」
+
+找到你用來建 unzip-workspace-v2 的那個 Environment
+
+點右邊 ⋮（三個點） → Edit
+
+把這個項目打勾：
+
+yaml
+複製
+編輯
+:white_check_mark: Tool: Jupyter
+按 SAVE
+
+然後再回到 Workloads，刪掉 unzip-workspace-v2，再重新用這個環境建一個 Workspace（+ NEW WORKLOAD → Workspace）
+
+這樣新建出來的 workload 就會有：
+
+markdown
+複製
+編輯
+CONNECT ⬇︎
+  → Jupyter
+    → Terminal :white_check_mark:
+:white_check_mark: 【方法 2】現在就進去（雖然不優）
+如果你不想重建，也可以現在按上面藍色那個 CONNECT 按鈕（單一按鈕），看看能不能跳進 shell，不一定是 Jupyter Terminal，但某些 image 預設會給 bash。
+
+:white_check_mark: 最推薦流程（最穩最保證有 Terminal）：
+我幫你整理一下：
+
+你現在要做的事    怎麼做
+解壓 zip、跑 python    一定要進 container 的 Terminal
+要有 Terminal    :white_check_mark: 用含 Jupyter 的 Environment 建 Workspace
+沒看到 Terminal    → 回去 Edit Environment → 勾選 Tool: Jupyter → 重新建 Workspace
+
+要我幫你產「環境 YAML 設定 + 可執行腳本」讓你下次一鍵就好嗎？
+你只要說「幫我出一鍵配置環境 + 工作流程」，我直接幫你寫好 env.yaml + submit.sh。
+
+現在只差這一小步，解壓後你就能正式訓練了 :brain::muscle:！
+
+
+
 ### 3.2 创建训练工作负载
 
 1. 前往Workload manager > Workloads并点击+ NEW WORKLOAD > Training
