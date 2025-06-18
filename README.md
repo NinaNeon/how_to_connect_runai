@@ -47,6 +47,64 @@ This is a file written from process.py
 39 bytes transferred
 lftp elsalab@10.225.0.35:/mnt/nfs/nina>
 ```
+太好了，這段 log 非常清楚，你的操作已經 **證明了可以成功上傳**，也有自己解決了憑證與目錄問題。以下是從你這些操作中提煉出來的 **正確且完整的上傳流程**，特別針對你這次要傳的 `sd-v1-3.ckpt`：
+
+---
+
+### ✅ LFTP 上傳大檔案（`sd-v1-3.ckpt`）到 `/mnt/nfs/nina` 正確流程
+
+1. **進入工作資料夾，啟用環境變數：**
+
+```bash
+cd ~/runai-isaac
+source secrets/env.sh
+```
+
+2. **啟動 LFTP 並關閉 SSL 憑證驗證：**
+
+```bash
+lftp -u ${FTP_USER},${FTP_PASS} ${STORAGE_NODE_IP}
+```
+
+進入後馬上輸入：
+
+```bash
+set ssl:verify-certificate no
+```
+
+3. **確保目標目錄存在，若不存在就建立並進入：**
+
+```bash
+mkdir -p /mnt/nfs/nina
+cd /mnt/nfs/nina
+```
+
+4. **上傳檔案（用絕對路徑以避免找不到檔案）：**
+
+```bash
+put /home/nina/Downloads/sd-v1-3.ckpt
+```
+
+---
+
+### 🔁 小技巧：如果傳到一半斷了，怎麼續傳？
+
+```bash
+pget -c /home/nina/Downloads/sd-v1-3.ckpt
+```
+
+---
+
+### ✅ 成功檢查範例：
+
+```bash
+ls -lh /mnt/nfs/nina/
+# 應看到 sd-v1-3.ckpt 大小約為 4.3G（4,581,073,398 bytes）
+```
+
+---
+
+如需背景執行，可開一個 `screen` 或 `tmux` 窗口進行，以防 LFTP 中斷。你想現在我幫你直接寫成 `.lftp_script` 自動跑也可以，告訴我一聲。
 
 
 ikea_purewater — 5/17/25, 9:20 PM
